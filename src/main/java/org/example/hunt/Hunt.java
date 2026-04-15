@@ -1,13 +1,11 @@
 package org.example.hunt;
 
 import org.example.AppContext;
+import org.example.CharacterStatus;
 
 public class Hunt {
     int setMonsterNumber;
-    int monsterAttack;
-    int monsterShild;
-    int monsterHP;
-    int monsterMaxHP;
+    private Monster monster;
 
     public void run() {
 
@@ -17,10 +15,9 @@ public class Hunt {
             if (setMonsterNumber == 0) return;
         } while (setMonsterNumber < 0 || setMonsterNumber > 3);
 
-        monsterSetting();
+        monster.monsterSetting(setMonsterNumber);
 
-        while(true)
-        {
+        while (true) {
             if (hunting() == 0)
                 return;
         }
@@ -36,58 +33,29 @@ public class Hunt {
         System.out.println("0. 뒤로가기");
     }
 
-    static void huntingHeader()
-    {
+    static void huntingHeader() {
         System.out.println("== 사냥터 ==");
     }
 
-    void monsterSetting() {
-        switch (setMonsterNumber) {
-            case 1 -> {
-                monsterAttack = 15;
-                monsterShild = 5;
-                monsterHP = 10;
-                monsterMaxHP = monsterHP;
-            }
-            case 2 -> {
-                monsterAttack = 25;
-                monsterShild = 15;
-                monsterHP = 20;
-                monsterMaxHP = monsterHP;
-            }
-            case 3 -> {
-                monsterAttack = 50;
-                monsterShild = 30;
-                monsterHP = 50;
-                monsterMaxHP = monsterHP;
-            }
-        }
-    }
-
-    void monsterStatus(){
-        AppContext.clearConsole();
-
-        System.out.printf("몬스터의 공격력 : %s \n", monsterAttack);
-        System.out.printf("몬스터의 방어력 : %s \n", monsterShild);
-        System.out.printf("캐릭터의 체력 : %s / %s \n", monsterHP, monsterMaxHP);
-    }
-
-    void selectChoice()
-    {
-        System.out.println();
+    void selectChoice() {
+        System.out.println("1. 공격");
+        System.out.println("0. 뒤로가기");
     }
 
     int hunting() {
         huntingHeader();
-        monsterStatus();
-        AppContext.defalutStatus();
+        monster.monsterStatus();
+        CharacterStatus.defaultStatus();
         selectChoice();
 
         int response = AppContext.getResponse(Hunt::huntingSelector);
 
-        if (response > 0 )
+        switch (response)
         {
-
+            case 0 -> {return 0;}
+            case 1 -> {
+            }
+            default -> {}
         }
 
         return response;

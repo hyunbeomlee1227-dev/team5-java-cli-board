@@ -5,12 +5,12 @@ public class App {
 
         while (true) {
             System.out.println("== 게임 앱 ==");
-            AppContext.defalutStatus();
+            CharacterStatus.defaultStatus();
 
             switch (AppContext.getResponse(AppContext::choiceOfPlace)) {
 
                 case 1:
-                    AppContext.getHunt().run();
+                    AppContext.hunt.run();
                     break;
                 case 5:
                     System.out.println("종료합니다.");
