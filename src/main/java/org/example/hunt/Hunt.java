@@ -1,31 +1,31 @@
 package org.example.hunt;
 
 import org.example.AppContext;
-import org.example.CharacterStatus;
+import org.example.Character;
 
 public class Hunt {
     int setMonsterNumber;
-    private Monster monster;
+    private final Monster monster;
+
+    public Hunt() {
+        monster = new Monster();
+    }
 
     public void run() {
-
         do {
             setMonsterNumber = AppContext.getResponse(Hunt::huntingSelector);
+            monster.MonsterSetting(setMonsterNumber);
 
-            if (setMonsterNumber == 0) return;
-        } while (setMonsterNumber < 0 || setMonsterNumber > 3);
+            AppContext.clearConsole();
+            huntingHeader();
+            monster.Status();
+            Character.Status();
 
-        monster.monsterSetting(setMonsterNumber);
-
-        while (true) {
-            if (hunting() == 0)
-                return;
-        }
+            while (hunting()) {}
+        } while (setMonsterNumber >= 1 && setMonsterNumber <= 3);
     }
 
     static void huntingSelector() {
-        AppContext.clearConsole();
-
         huntingHeader();
         System.out.println("1. 고블린");
         System.out.println("2. 오크");
@@ -37,27 +37,34 @@ public class Hunt {
         System.out.println("== 사냥터 ==");
     }
 
-    void selectChoice() {
+    static void selectChoice() {
         System.out.println("1. 공격");
         System.out.println("0. 뒤로가기");
     }
 
-    int hunting() {
-        huntingHeader();
-        monster.monsterStatus();
-        CharacterStatus.defaultStatus();
-        selectChoice();
-
-        int response = AppContext.getResponse(Hunt::huntingSelector);
-
-        switch (response)
-        {
-            case 0 -> {return 0;}
-            case 1 -> {
+    boolean hunting() {
+        switch (AppContext.getResponse(Hunt::selectChoice)) {
+            case 0 -> {
+                return false;
             }
-            default -> {}
-        }
+            case 1 -> {
+                Character.PlayerAttacked(monster);
 
-        return response;
+                if (monster.hp <= 0)
+                    monster.Reset();
+
+                else
+                    monster.Attack();
+
+                System.out.println();
+                huntingHeader();
+                monster.Status();
+                Character.Status();
+            }
+            default -> {
+                return true;
+            }
+        }
+        return true;
     }
 }

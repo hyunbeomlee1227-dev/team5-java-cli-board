@@ -2,23 +2,23 @@ package org.example.hunt;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.example.AppContext;
+import org.example.Character;
 
 @Getter
 @Setter
 public class Monster {
     int attack;
-    int shield;
+    int defense;
     int hp;
     int maxHp;
     int exp;
     int gold;
 
-    void monsterSetting(int setMonsterNumber) {
+    void MonsterSetting(int setMonsterNumber) {
         switch (setMonsterNumber) {
             case 1 -> {
                 attack = 15;
-                shield = 5;
+                defense = 5;
                 hp = 10;
                 maxHp = hp;
                 exp = 5;
@@ -26,7 +26,7 @@ public class Monster {
             }
             case 2 -> {
                 attack = 25;
-                shield = 15;
+                defense = 15;
                 hp = 20;
                 maxHp = hp;
                 exp = 20;
@@ -34,20 +34,41 @@ public class Monster {
             }
             case 3 -> {
                 attack = 50;
-                shield = 30;
+                defense = 30;
                 hp = 50;
                 maxHp = hp;
                 exp = 50;
                 gold = 100;
             }
+            default -> {}
         }
     }
 
-    void monsterStatus() {
-        AppContext.clearConsole();
-
+    void Status() {
         System.out.printf("몬스터의 공격력 : %s \n", attack);
-        System.out.printf("몬스터의 방어력 : %s \n", shield);
-        System.out.printf("캐릭터의 체력 : %s / %s \n", hp, maxHp);
+        System.out.printf("몬스터의 방어력 : %s \n", defense);
+        System.out.printf("몬스터의 체력 : %s / %s \n", hp, maxHp);
+        System.out.println();
+    }
+
+    void Reset() {
+        System.out.printf("몬스터가 사망했습니다.\n%s의 경험치와 %s의 골드를 획득하셨습니다\n", exp, gold);
+        hp = maxHp;
+    }
+
+    void Attack() {
+        if (Character.hp + Character.defense <= attack)
+            Character.PlayerDead();
+
+        else {
+            if (Character.defense < attack) {
+                int damage = attack - Character.defense;
+                System.out.printf("플레이어가 %s만큼의 데미지를 입었습니다.\n", damage);
+                Character.hp -= damage;
+            }
+
+            else
+                System.out.println("플레이어가 방어에 성공합니다.");
+        }
     }
 }

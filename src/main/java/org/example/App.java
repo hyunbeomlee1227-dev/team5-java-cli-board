@@ -5,19 +5,19 @@ public class App {
 
         while (true) {
             System.out.println("== 게임 앱 ==");
-            CharacterStatus.defaultStatus();
+            Character.Status();
 
             switch (AppContext.getResponse(AppContext::choiceOfPlace)) {
 
-                case 1:
+                case 1 -> {
+                    AppContext.clearConsole();
                     AppContext.hunt.run();
-                    break;
-                case 5:
+                }
+                case 5 -> {
                     System.out.println("종료합니다.");
                     return;
+                }
             }
-
-            AppContext.clearConsole();
         }
     }
 

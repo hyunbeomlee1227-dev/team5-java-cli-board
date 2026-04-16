@@ -8,12 +8,12 @@ import java.util.Scanner;
 @Getter
 public class AppContext {
     public static Scanner scanner;
-    public static CharacterStatus characterStatus;
+    public static Character characterStatus;
     public static Hunt hunt;
 
     public static void renew() {
         scanner = new Scanner(System.in);
-        characterStatus = new CharacterStatus();
+        characterStatus = new Character();
         hunt = new Hunt();
     }
 
