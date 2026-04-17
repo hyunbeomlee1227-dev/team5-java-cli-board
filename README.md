@@ -17,11 +17,11 @@
 구조 : 
     - src
         - hunt
-          -> Hunt
-          -> Monster
+          - Hunt
+          - Monster
         - store
-          -> Armor
-          -> Store
-          -> Weapon
+          - Armor
+          - Store
+          - Weapon
 
 시간이 촉박하여 사이즈를 조금 많이 줄였고 refactor를 하지 못했으며 Test는 작업하면서 Test를 하고 작성을 하지 못했습니다.
